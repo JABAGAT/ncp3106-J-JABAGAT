@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style type="text/css" media="projection, screen" >
+
+body table {
+        border-collapse : collapse;
+        font-size: 16px;
+        margin : 0 0 20px 20px;
+}
+
+table td {
+    padding : 0 5px;
+}
+
+table caption {
+    font-size : 18px;
+    letter-spacing: 5px;
+    text-align : center;
+    margin-bottom : 10px;
+}
+
+table thead {
+    border : 2px solid rgb(190, 026, 018);
+    border-width : 2px 2px 0 2px;
+    background: rgba(190, 026, 018,0.6);
+
+}
+
+table thead tr {
+    height : 40px;
+}
+
+table thead th {
+    padding : 0 5px;
+    letter-spacing: 2px;
+}
+
+table tbody {
+    border : 2px solid rgb(179, 177, 177);
+    border-color : rgb(179, 177, 177) rgb(190, 026, 018) rgb(179, 177, 177) rgb(190, 026, 018);
+}
+
+table tfoot {
+    border : 2px solid rgb(190, 026, 018);
+    border-width : 0 2px 2px 2px;
+    text-align: center;
+    background : rgba(190, 026, 018,0.6);
+}
+
+table tr {
+    height : 40px;
+}
+table tbody tr:nth-of-type(2n+1) {
+    background-color:rgba(152,228,215,0.6);
+}
+
+table col.firstColumn {
+    width : 22%;
+}
+
+table col.middleColumns {
+    width : 31%;
+}
+
+table col.lastColumn {
+    width: 16%;
+}
+
+
+
+
+
+</style>
+<title>A table of Numbers for house's</title>
+</head>
+<body>
+<table>
+        <caption>Building Models</caption>
+        <colgroup>
+            <col class="firstColumn" />
+            <col class="middleColumns" span="2" />
+            <col class="lastColumn" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Total Sq. Ft.</th>
+                <th>Sphere Size</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="2">Call us about custom pricing!</td>
+                <td></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <td>Class IA</td>
+                <td>4700 square ft.</td>
+                <td>50 ft. 5/8 sphere</td>
+                <td>$150,000</td>
+            </tr>
+            <tr>
+                <td>Class IB</td>
+                <td>4700 square ft.</td>
+                <td>35 ft. 5/8 sphere</td>
+                <td>$125,000</td>
+            </tr>
+            <tr>
+                <td>Class IIA</td>
+                <td>4700 square ft.</td>
+                <td>50 ft. 5/8 sphere</td>
+                <td>$112,000</td>
+            </tr>
+            <tr>
+                <td>Class IIB</td>
+                <td>4700 square ft.</td>
+                <td>35 ft. 5/8 sphere</td>
+                <td>$97,000</td>
+            </tr>
+            <tr>
+                <td>Class IIIA</td>
+                <td>4700 square ft.</td>
+                <td>45 ft. 5/8 sphere</td>
+                <td>$84,000</td>
+            </tr>
+            <tr>
+                <td>Class IIIB</td>
+                <td>4700 square ft.</td>
+                <td>35 ft. 5/8 sphere</td>
+                <td>$73,000</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+
+
+
+
+created
+Apr '12
+last reply
+Oct '14
+9
+replies
+41.3k
+views
+4
+users
+1
+link
+3
+
+Level up your JavaScript skills with ‘Modern JavaScript’ - Free.
+Package management, linting, transpilation, module bundling, minification, source maps, frameworks, unit testing, and more. We wrote this book for any intermediate JavaScript developer looking to go to the next level.
+
+Read online
+
+kohoutek
+Mazel tov!
+Apr '12
+There’s no (or little) support for using it on the <table> element directly. However, you could use it on the <td> element with a combination of :first-child pseudo selectors.
+
+2 Replies
+
+
+dresden_phoenix
+Mentor
+Apr '12
+It takes a little rangling as you have to take into account the behavior of border collapse OR that element overlap, so if you round the parent element you need to round the children as well which kinda make rounding the parent element redundant in some cases.
+
+In other words, even w/o border collapse you would need to round off the four individual corner table cells as well, possibly using the method suggested by Maleika.
+
+Rounded corners with border collapse requires a bit more trickery. Here is how I do it:
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Untitled Page</title>
+		<style type="text/css" media="screen"><!--
+td, th{height:90px; width:90px; }
+table {  border:1px solid red; padding:0;   border-collapse: separate; border-radius:15px; border-spacing:0}
+td, th  { text-align: center; vertical-align: middle; background: pink; border: none; }
+td + td, th + th {border-left:1px solid #555}
+th, tr td  {border-bottom:1px solid #555; }
+tfoot td {border-bottom:none}
+td:first-child {border-left:none}
+td:last-child {border-right:none}
+thead +tr td,  tr+ tr td, tfoot td{border-top:none;}
+
+th:first-child { -webkit-border-radius:15px 0 0 0; border-left:none}
+th:last-child{ -webkit-border-radius:0 15px 0 0;border-right:none }
+tfoot td:first-child{  -webkit-border-radius:0 0 0 15px ;}
+tfoot td:last-child{  -webkit-border-radius:0 0 15px 0;}
+--></style>
+	</head>
+
+	<body bgcolor="#ffffff">
+		<table  border="1" cellspacing="2" cellpadding="0">
+			<thead>
+				<tr>
+					<th>Hello</th>
+					<th>HI</th>
+					<th>HOLA!!!</th>
+					<th>It's fun to style things!</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tr>
+				<td></td>
+				<td>YEs, it is!</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>YEs, it is!</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tfoot>
+				<tr>
+					<td>aaa</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+	</body>
+
+</html>
